@@ -1,0 +1,25 @@
+Congratulations, you have deployed your Node.js Application to Kubernetes using Helm!
+
+To verify your application is running, run the following two commands to set the SAMPLE_NODE_PORT and SAMPPLE_NODE_IP environment variables to the location of your application:
+
+export SAMPLE_NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services nodeserver-service)
+export SAMPLE_NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
+
+And then open your web browser to http://${SAMPLE_NODE_IP}:${SAMPLE_NODE_PORT}" from the command line, eg:
+
+open http://${SAMPLE_NODE_IP}:${SAMPLE_NODE_PORT}
+
+Alternatively, use "kubectl get services" to confirm that the service 
+|-----------|--------------------|-------------|---------------------------|
+| NAMESPACE |        NAME        | TARGET PORT |            URL            |
+|-----------|--------------------|-------------|---------------------------|
+| default   | nodeserver-service | http/3000   | http://192.168.49.2:31139 |
+|-----------|--------------------|-------------|---------------------------|
+* Starting tunnel for service nodeserver-service.
+|-----------|--------------------|-------------|------------------------|
+| NAMESPACE |        NAME        | TARGET PORT |          URL           |
+|-----------|--------------------|-------------|------------------------|
+| default   | nodeserver-service |             | http://127.0.0.1:38397 |
+|-----------|--------------------|-------------|------------------------|
+
+You can then use the URL output by the tunnel service "https://127.0.0.1:38397" in this case.
